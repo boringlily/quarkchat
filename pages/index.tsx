@@ -50,13 +50,37 @@ function Nav()
 }
 
 
+
+
+function Post()
+{
+
+
+  return(
+    <div className='Post '>
+
+
+
+
+
+    </div>
+
+
+
+  )
+}
+
+
+
 function Feed()
 {
 
-  
+  const feedContent = <Post/>;
 
 return(
-  <div className='Feed max-w-7xl '> some random content </div>
+  <div className='Feed max-w-7xl '> 
+  {feedContent}
+</div>
 )
 
 }
@@ -74,6 +98,7 @@ export default function Home()
 
   async function getUser()
   {
+
       const {data, error} = await supabase.from('profile').select("*");
 
   }
@@ -83,7 +108,7 @@ export default function Home()
     <main className="flex min-h-screen flex-col items-center justify-center bg-neutral-100">
       
       
-       <Nav/>
+     {/* <Nav/> */}
       <Feed/>
       
 

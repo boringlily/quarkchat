@@ -11,25 +11,31 @@ export interface Database {
     Tables: {
       posts: {
         Row: {
-          authorID: string
-          content: string | null
-          created_at: string | null
+          author_id: string
+          comments: Json[]
+          content: string
+          created_at: string
           edited: boolean | null
-          postID: string
+          post_id: string
+          upvoted: string[]
         }
         Insert: {
-          authorID: string
-          content?: string | null
-          created_at?: string | null
+          author_id: string
+          comments: Json[]
+          content?: string
+          created_at?: string
           edited?: boolean | null
-          postID?: string
+          post_id?: string
+          upvoted: string[]
         }
         Update: {
-          authorID?: string
-          content?: string | null
-          created_at?: string | null
+          author_id?: string
+          comments?: Json[]
+          content?: string
+          created_at?: string
           edited?: boolean | null
-          postID?: string
+          post_id?: string
+          upvoted?: string[]
         }
       }
       profiles: {
@@ -40,7 +46,6 @@ export interface Database {
           id: string
           updated_at: string | null
           username: string | null
-          website: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -49,7 +54,6 @@ export interface Database {
           id: string
           updated_at?: string | null
           username?: string | null
-          website?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -58,7 +62,6 @@ export interface Database {
           id?: string
           updated_at?: string | null
           username?: string | null
-          website?: string | null
         }
       }
     }
