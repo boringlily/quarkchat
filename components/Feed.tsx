@@ -1,55 +1,39 @@
 import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import Post from "./Post";
+import { useQuery } from "react-query";
 
 
 
 export default function Feed() {
     const supabase = useSupabaseClient();
 
-    const [postData, setPostData] = useState<Database>([]);
-    const [loading, setLoading] = useState(true);
+    const [postsList, setPostsList] = useState<Database>([]);
 
-    useEffect(() => {
-      
-      getAllPosts();
-    }, []);
-  
 
-    async function getAllPosts() {
-        try {
-          setLoading(true)
-    
-          let {data:posts, error, status } = await supabase
+    const {isLoading} = useQuery(
+      {
+        queryFn: async()=>{
+          const {data, error, status } = await supabase
             .from('posts')
             .select('*')
-    
-          if (error && status !== 406) {
-            throw error
+
+          if(!error)
+          {
+            setPostsList(data);
           }
-    
-          if(!error) {
-            setPostData(posts);
-            console.log(posts);
-          }
-        } catch (error) {
-          alert('Error loading posts')
-          console.log(error)
-        } finally {
-            console.log(postData)
-          setLoading(false)
         }
       }
+    )
+  
 
-
-
-    const feedContent = postData.map((post: Database) => {
-      return <Post key={post.post_id} content={post} />;
+    const feedList = postsList.map((post: Database) => {
+      return <Post key={post.id} content={post} />;
     });
   
     return (
       <div className="feed flex max-w-7xl w-full flex-column flex-wrap gap-4 ">
-        {feedContent}
+        {feedList}
       </div>
     );
   }
