@@ -15,7 +15,7 @@ export default function Account() {
 
   useEffect(() => {
     getProfile()
-  }, [session])
+  }, [])
 
   async function getProfile() {
     try {
