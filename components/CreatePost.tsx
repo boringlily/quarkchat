@@ -1,7 +1,16 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, Session } from "@supabase/auth-helpers-react";
 import { useState } from "react";
+import type { Database } from "../utils/databaseTypes.ts";
+type ProfileType = Database['public']['Tables']['profiles']['Row'];
 
-export default function CreatePost({session, userProfile}) {
+
+type CreatePostType = {
+session: Session | null;
+userProfile: ProfileType;
+}
+
+
+export default function CreatePost({session, userProfile}:CreatePostType) {
     const supabase = useSupabaseClient();
     const [content, setContent] = useState("");
   
@@ -12,7 +21,7 @@ export default function CreatePost({session, userProfile}) {
           .insert([{ author: session.user.id, content: content, created_at: Date().slice(0, 24) }]);
   
         if (!error) {
-  
+          
         }
       }
     };

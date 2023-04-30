@@ -7,7 +7,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import Link from "next/link";
 import autoAnimate from "@formkit/auto-animate";
 
-import type { Database } from "../utils/database.types";
+import type { Database } from "../utils/databaseTypes.ts";
 import Post from "@/components/Post";
 import Feed from "@/components/Feed";
 import TextArea from "@/components/TextArea";
