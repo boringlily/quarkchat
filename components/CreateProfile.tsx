@@ -12,11 +12,12 @@ export default function CreateProfile({session}){
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
 
+
+    //TODO: #1 Mutation WIP
     const {} = useMutation(
         {
             mutationFn: async ()=>{
-               const {data, error}  = await supabase
-
+                const {data, error} = await supabase.from('profiles').insert([{id:session.user.id, username:username, bio:bio, updated_at:Date().slice(0,24)}]);
             }
         }
     )

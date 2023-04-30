@@ -19,14 +19,15 @@ export default function App({
 
   return ( 
   
-  
-  <QueryClientProvider client={queryClient}>  
     <SessionContextProvider
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
+  <QueryClientProvider client={queryClient}>  
+
       <Component {...pageProps} />
+      </QueryClientProvider>
     </SessionContextProvider>
-    </QueryClientProvider>
+    
   )
 }

@@ -6,24 +6,24 @@ import { useEffect } from "react";
 
 
 
-export default function Post({ content }: Database) {
+export default function Post({ post }: Database) {
     const supabase = useSupabaseClient();
 
-    useEffect(() => { }, [content]);
+    useEffect(() => { }, [post]);
   
-    content
+    post
     
     return (
-      <Link href={{pathname:'/[postid]', query:{postid: content.id}}} className="Post bg-neutral-900 p-4 w-full flex flex-col gap-2 rounded-xl border-solid border-2 border-transparent hover:border-red-500 hover:cursor-pointer">
+      <Link href={{pathname:'/[postid]', query:{postid: post.id}}} className="Post bg-neutral-900 p-4 w-full flex flex-col gap-2 rounded-xl border-solid border-2 border-transparent hover:border-blue-500 hover:cursor-pointer">
         
         <div className="flex flex-row gap-4">
-            <div className="text-blue-400">@{content.username}</div>
-            <div>{content.content}</div>
+            <div className="text-blue-400">@{post.username}</div>
+            <div>{post.content}</div>
         </div>
 
         <div className="flex flex-row gap-4 text-sm justify-end">
-            {!!content.edited && <div className="text-blue-400"> Edited </div>}
-            <div className="">Created at:{new Date(content.created_at).toLocaleDateString('en')}</div>
+            {!!post.edited && <div className="text-blue-400"> Edited </div>}
+            <div className="">Created at: {new Date(post.created_at).toLocaleDateString('en')}</div>
         </div>
         
       </Link>

@@ -11,78 +11,26 @@ import type { Database } from "../utils/database.types";
 import Post from "@/components/Post";
 import Feed from "@/components/Feed";
 import TextArea from "@/components/TextArea";
-import { useQuery } from "react-query";
+import { useQueries, useQuery } from "react-query";
 import Loader from "@/components/Loader";
 import CreateProfile from "@/components/CreateProfile";
+import CreatePost from "@/components/CreatePost";
 
-
-function CreatePost({ session, userProfile }) {
-  const supabase = useSupabaseClient();
-  const [content, setContent] = useState("");
-
-  const handleCreatePost = async () => {
-    if (content.length > 0) {
-      const { data, error } = await supabase
-        .from("posts")
-        .insert([{ author: session.user.id, content: content, created_at: Date().slice(0, 24) }]);
-
-      if (!error) {
-
-      }
-    }
-  };
-
-  const handleCanclePost = () => {
-    setContent("");
-  };
-
-  return (
-    <div className="flex flex-col justify-start items-left gap-2 m-4 p-4 bg-neutral-600 w-full rounded-2xl">
-
-
-      <div className="flex flex-row justify-center items-center ">
-        <div className="min-w-fit overflow-show py-2 resize-none w-full text-blue-400 font-sans font-semibold text-center" >@{userProfile?.username}</div>
-        <textarea
-          placeholder="What is on your mind?"
-          name="Post"
-          cols={30}
-          rows={1}
-          className="min-w-fit overflow-show p-3 rounded-2xl text-black resize-none w-full"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-        ></textarea>
-      </div>
-      {/* <TextArea/> */}
-
-      {content.length > 0 && (
-        <div className="flex flex-row text-white gap-4 justify-end">
-          <button onClick={handleCanclePost}> Clear </button>
-          <button onClick={handleCreatePost}> Post </button>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function Home() {
   const session = useSession();
-  const supabase = useSupabaseClient();
+  const supabase = useSupabaseClient<Database>();
   const [createPost, setCreatePost] = useState(false);
   const [userProfile, setUserProfile] = useState<any>(null);
 
-  const {isLoading} = useQuery({
+  const {data, isLoading} = useQuery({
     queryKey: ['userProfile'],
     queryFn: async () => {
-      if (!!session) {
-        const {data} = await supabase.from('profiles').select('*').eq('id', session?.user.id).single();
-        console.log(data);
-        setUserProfile(data);
-        return data
-      }
-      return new Error;
-
+        const {data:sessionData} = await supabase.auth.getSession();
+        const {data:userProfile} = await supabase.from('profiles').select('*').eq('id', sessionData.session?.user.id).limit(1).single();
+        // console.log(userProfile);
+        setUserProfile(userProfile);
+        return {userProfile, sessionData}
     }
   }
   )

@@ -3,6 +3,7 @@ import Post from "@/components/Post";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
+import {Database} from '../utils/database.types'
 
 
 export default function Update() {
@@ -11,7 +12,7 @@ export default function Update() {
     const { postid } = router.query;
     const supabase = useSupabaseClient();
 
-    const [postData, setPostData] = useState<Database>([]);
+    const [postData, setPostData] = useState<Database | null>([]);
     const [loading, setLoading] = useState(true);
     const [edit,setEdit] = useState(false);
     const [content,setContent]=useState(null)

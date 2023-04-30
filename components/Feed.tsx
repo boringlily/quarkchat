@@ -16,10 +16,11 @@ export default function Feed() {
         queryFn: async()=>{
           const {data, error, status } = await supabase
             .from('posts')
-            .select('*')
+            .select('id, profiles(username), content, created_at, edited')
 
           if(!error)
           {
+            console.log(data)
             setPostsList(data);
           }
         }
@@ -28,11 +29,11 @@ export default function Feed() {
   
 
     const feedList = postsList.map((post: Database) => {
-      return <Post key={post.id} content={post} />;
+      return <Post key={post.id} post={post} />;
     });
   
     return (
-      <div className="feed flex max-w-7xl w-full flex-column flex-wrap gap-4 ">
+      <div className="feed flex max-w-7xl mt-4 w-full flex-column flex-wrap gap-4 ">
         {feedList}
       </div>
     );
