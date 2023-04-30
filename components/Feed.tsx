@@ -20,7 +20,7 @@ export default function Feed() {
         queryFn: async()=>{
           const {data, error, status } = await supabase
             .from('posts')
-            .select('id, profiles(username), content, created_at, edited, author_id')
+            .select('*')
 
           if(!error)
           {
