@@ -1,31 +1,31 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Session, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import { useMutation } from "react-query";
 
+type CreateProfileType = {
+session: Session | null;
+}
 
-
-
-export default function CreateProfile({session}){
+export default function CreateProfile({session}:CreateProfileType){
 
     const supabase = useSupabaseClient();
 
     const [username, setUsername] = useState('');
     const [bio, setBio] = useState('');
 
+    // const {} = useMutation(
+    //     {
+    //         mutationFn: async ()=>{
+    //            const {data, error}  = await supabase
 
-    //TODO: #1 Mutation WIP
-    const {} = useMutation(
-        {
-            mutationFn: async ()=>{
-                const {data, error} = await supabase.from('profiles').insert([{id:session.user.id, username:username, bio:bio, updated_at:Date().slice(0,24)}]);
-            }
-        }
-    )
+    //         }
+    //     }
+    // )
 
     const handleCreateProfile = async () =>
     {   
         if(username.length > 0){
-            const {data, error} = await supabase.from('profiles').insert([{id:session.user.id, username:username, bio:bio, updated_at:Date().slice(0,24)}])
+            const {data, error} = await supabase.from('profiles').insert([{id:session?.user.id, username:username, bio:bio, updated_at:Date().slice(0,24)}])
         }
     }
 

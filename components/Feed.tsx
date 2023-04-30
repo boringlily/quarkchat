@@ -2,14 +2,13 @@ import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-r
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import { useQuery } from "react-query";
-import { Database } from "@/utils/databaseTypes";
-type postsArray = Array<Database['public']['Tables']['posts']['Row']>
+
 
 
 export default function Feed() {
     const supabase = useSupabaseClient();
 
-    const [postsList, setPostsList] = useState<postsArray>([]);
+    const [postsList, setPostsList] = useState<Database>([]);
 
 
     const {isLoading} = useQuery(
@@ -29,7 +28,7 @@ export default function Feed() {
     )
   
 
-    const feedList = postsList.map((post: any) => {
+    const feedList = postsList.map((post: Database) => {
       return <Post key={post.id} post={post} />;
     });
   

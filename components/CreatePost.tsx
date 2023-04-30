@@ -18,10 +18,9 @@ export default function CreatePost({session, userProfile}:CreatePostType) {
       if (content.length > 0) {
         const { data, error } = await supabase
           .from("posts")
-          .insert([{ author: session.user.id, content: content, created_at: Date().slice(0, 24) }]);
+          .insert([{ author: session?.user.id, content: content, created_at: Date().slice(0, 24) }]);
   
         if (!error) {
-          
         }
       }
     };
@@ -32,7 +31,6 @@ export default function CreatePost({session, userProfile}:CreatePostType) {
   
     return (
       <div className="flex flex-col justify-start items-left gap-2 p-4 bg-neutral-600 w-full rounded-2xl">
-  
   
         <div className="flex flex-row justify-center items-center ">
           <div className="min-w-fit p-2 resize-none text-blue-400 font-sans font-semibold" >@{userProfile?.username}</div>

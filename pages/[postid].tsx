@@ -15,7 +15,7 @@ export default function Update() {
     const [postData, setPostData] = useState<any>();
     const [loading, setLoading] = useState(true);
     const [edit,setEdit] = useState(false);
-    const [content,setContent]=useState(null)
+    const [content,setContent]=useState('')
 
 
     async function getPost() {
@@ -71,7 +71,7 @@ export default function Update() {
           onChange={(e) => {
             setContent(e.target.value);
           }}
-        ></textarea> <button className="p-2 hover:text-green-600"> Update</button> </div>:<Post content={postData}/>}
+        ></textarea> <button className="p-2 hover:text-green-600">Update</button> </div>:<Post content={postData}/>}
 
       {edit?<button className="p-2 hover:text-red-600" onClick={()=>{setEdit(false)}}>
         Cancel
