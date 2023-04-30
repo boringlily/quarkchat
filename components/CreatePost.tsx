@@ -16,12 +16,15 @@ export default function CreatePost({session, userProfile}:CreatePostType) {
   
     const handleCreatePost = async () => {
       if (content.length > 0) {
+        const {data:sessionData} = await supabase.auth.getSession();
         const { data, error } = await supabase
           .from("posts")
-          .insert([{ author: session?.user.id, content: content, created_at: Date().slice(0, 24) }]);
+          .insert([{ author_id: sessionData.session?.user.id, content: content, created_at: Date().slice(0, 24) }]);
   
         if (!error) {
+          handleCanclePost
         }
+
       }
     };
   

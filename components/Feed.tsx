@@ -2,13 +2,17 @@ import { useSession, useSupabaseClient, useUser } from "@supabase/auth-helpers-r
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import { useQuery } from "react-query";
+import { Database } from '@/utils/databaseTypes.ts'
+import Loader from "./Loader";
+
+
 
 
 
 export default function Feed() {
     const supabase = useSupabaseClient();
 
-    const [postsList, setPostsList] = useState<Database>([]);
+    const [postsList, setPostsList] = useState<any>();
 
 
     const {isLoading} = useQuery(
@@ -16,19 +20,25 @@ export default function Feed() {
         queryFn: async()=>{
           const {data, error, status } = await supabase
             .from('posts')
-            .select('id, profiles(username), content, created_at, edited')
+            .select('id, profiles(username), content, created_at, edited, author_id')
 
           if(!error)
           {
-            console.log(data)
             setPostsList(data);
           }
         }
       }
     )
-  
+      
 
-    const feedList = postsList.map((post: Database) => {
+    if( isLoading)
+    {
+      return <Loader/>
+    }
+
+
+
+    const feedList = postsList.map((post: any) => {
       return <Post key={post.id} post={post} />;
     });
   
