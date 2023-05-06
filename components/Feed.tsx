@@ -37,10 +37,10 @@ export default function Feed() {
     }
 
 
-
-    const feedList = postsList.map((post: any) => {
+   
+    const feedList = postsList.length > 0?postsList.map((post: any) => {
       return <Post key={post.id} post={post} />;
-    });
+    }):"The feed is empty"
   
     return (
       <div className="feed flex max-w-7xl mt-4 w-full flex-column flex-wrap gap-4 ">

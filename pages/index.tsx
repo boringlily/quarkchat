@@ -14,7 +14,6 @@ import TextArea from "@/components/TextArea";
 import { useQueries, useQuery } from "react-query";
 import Loader from "@/components/Loader";
 import CreateProfile from "@/components/CreateProfile";
-import CreatePost from "@/components/CreatePost";
 
 
 export default function Home() {
@@ -63,7 +62,7 @@ export default function Home() {
 
       <div className="Content flex flex-col max-w-5xl ">
 
-        {userProfile?.length == 0 ? <CreateProfile session={session} /> : <CreatePost session={session} userProfile={userProfile} />}
+        {userProfile?.length == 0 ? <CreateProfile session={session} /> : <div className="Feed Nav"> <Link href={'/posts/create'}>Create Post </Link> </div>}
 
 
         <Feed />
