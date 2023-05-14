@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm'
 
 export default function CreatePostPage() {
   const supabase = useSupabaseClient();
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<any>(null);
 
   const [preview, setPreview] = useState<boolean>(false);
   const [contentTitle, setContentTitle] = useState(``);
