@@ -1,6 +1,5 @@
 # Web Development Final Project - *Quark Chat*
 
-Submitted by: **Lily**
 
 This web app: **A simple information sharing platform with support for MarkDown content**
 
@@ -52,7 +51,7 @@ GIF created with Giphy
 
 ## License
 
-    Copyright [2023] [Lily Moon]
+    Copyright [2023] [beecurious]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
