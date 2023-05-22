@@ -11,30 +11,11 @@ export default function Post({ post }: any) {
     const supabase = useSupabaseClient();
    
 
-    const {data:postUsername, isLoading} = useQuery(
-      {
-        queryFn: async ()=>{
-
-          const {data, error} = await supabase
-          .from('profiles')
-          .select('username')
-          .eq('id', post.author_id)
-          .single()
-          return(data?.username);
-        }
-      }
-    )
-
-    if(isLoading)
-    {
-      return(<Loader/>)
-    }
-
     return (
       // <Link href={{pathname:'/[postid]', query:{postid: post?.id}}} className="Post bg-neutral-900 p-4 w-full flex flex-col gap-2 rounded-xl border-solid border-2 border-transparent hover:border-red-500 hover:cursor-pointer">
       <div className="Post bg-neutral-900 p-4 w-full flex flex-col gap-2 rounded-xl border-solid border-2 border-transparent hover:border-blue-500 hover:cursor-pointer">
       <div className="flex flex-row gap-4">
-            <div className="text-blue-400">@{postUsername}</div>
+            <div className="text-blue-400"></div>
             <div>{post.content}</div>
         </div>
 

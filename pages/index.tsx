@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { type Session, useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
@@ -14,13 +14,33 @@ import TextArea from "@/components/TextArea";
 import { useQueries, useQuery } from "react-query";
 import Loader from "@/components/Loader";
 import CreateProfile from "@/components/CreateProfile";
+import NavBar from "@/components/NavBar.tsx";
 
 
 export default function Home() {
-  const session = useSession();
+
   const supabase = useSupabaseClient<Database>();
   const [createPost, setCreatePost] = useState(false);
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [session, setSession] = useState<any>(null);
+
+  const getSession = useQuery(
+    {
+      queryFn: async (postData) => {
+        console.log(session);
+        if (session != null) {
+          return '';
+        }
+        const { data, error } = await supabase.auth.getSession();
+
+        if (!error) {
+          console.log("CreatePost -> auth query: ", data, 'error: ', error);
+          setSession(data);
+        }
+      },
+      refetchOnWindowFocus: false
+    }
+  );
 
   const {data, isLoading} = useQuery({
     queryKey: ['userProfile'],
@@ -55,10 +75,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-start bg-neutral-950 text-white">
-      <div className='Nav p-4 gap-6 flex flex-row items-center justify-between w-full bg-neutral-900 mb-6' >
-        <div className="Logo text-xl font-sans font-bold p-4"> QuarkChat</div>
-        {!!session && <button className='text-white p-2 hover:text-red-500' onClick={() => { supabase.auth.signOut() }}>Sign Out</button>}
-      </div>
+     <NavBar session={session}/>
 
       <div className="Content flex flex-col max-w-5xl ">
 

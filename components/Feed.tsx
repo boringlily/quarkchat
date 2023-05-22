@@ -31,11 +31,14 @@ export default function Feed() {
     )
       
 
-    if( isLoading)
+    if(isLoading)
     {
       return <Loader/>
     }
-
+    if(postsList == undefined)
+    {
+      return <Loader/>
+    }
 
    
     const feedList = postsList.length > 0?postsList.map((post: any) => {
