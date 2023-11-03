@@ -30,7 +30,7 @@ export default function NavBar({session}:any)
     return(  
         <div className='Nav p-4 gap-6 flex flex-row items-center justify-between w-full bg-neutral-900 mb-6' >
         <div className="Logo text-xl font-sans font-bold p-4"> QuarkChat</div>
-        {!!session && <button className='text-white p-2 hover:text-red-500' onClick={() => { supabase.auth.signOut() }}>{username}</button>}
+        {!!session && <button className='text-white p-2 hover:text-red-500' onClick={() =>supabase.auth.signOut()}>{username}</button>}
         </div>
      )
 
